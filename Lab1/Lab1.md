@@ -218,8 +218,7 @@ SELECT \* FROM.
 
 ![](media/image21.png)
 
-![](media/image22.png){width="4.029886264216973in"
-height="5.397905730533683in"}
+![](media/image22.png)
 
 Если выполнить: SELECT \* FROM test_table_sam; PostgreSQL выдаст ошибку,
 т.к test_table_sam находится в test_schema, а поиск идёт по схеме
@@ -248,8 +247,7 @@ sudo nano /etc/postgresql/13/main/postgresql.conf
 умолчанию стоит подключение localhost, т.е. подключение может быть
 только внутри, а удалённые отклоняются.
 
-![](media/image25.png){width="5.637972440944882in"
-height="2.356649168853893in"}
+![](media/image25.png)
 
 Добавили строчку подключения в pg_hba.conf, где:
 
