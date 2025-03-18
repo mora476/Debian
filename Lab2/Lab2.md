@@ -117,8 +117,8 @@ dbsamplinav`
 
 Делаем backup таблицы public.test_table:
 
-pg_dump -U postgres -Fc -f bk_test_table_backup.dump -t
-public.test_table dbsamplinav
+``pg_dump -U postgres -Fc -f bk_test_table_backup.dump -t
+public.test_table dbsamplinav``
 
 ![](media/image3.png)
 
