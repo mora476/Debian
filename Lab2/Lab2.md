@@ -66,7 +66,7 @@ pg_basebackup -U postgres -D /path/to/backup_dir -Ft
 
 2.  **Создание резервной копии**
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image1.png)
+![](media/image1.png)
 
 pg_dump -U postgres -Fc -f dbsamplinav_backup.dump dbsamplinav
 
@@ -113,24 +113,24 @@ dbsamplinav
 
 3.  **Частичное (выборочное) резервное копирование**
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image2.png)
+![](media/image2.png)
 
 Делаем backup таблицы public.test_table:
 
 pg_dump -U postgres -Fc -f bk_test_table_backup.dump -t
 public.test_table dbsamplinav
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image3.png)
+![](media/image3.png)
 
 Проверяем
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image4.png)
+![](media/image4.png)
 
 Проверяем удаление таблицы.
 
 4.  **Восстановление из резервной копии**
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image5.png)
+![](media/image5.png)
 
 Восстанавливаем таблицу с помощью backup
 
@@ -138,7 +138,7 @@ public.test_table dbsamplinav
 
 5.  **Автоматизация бэкапов с помощью cron**
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image6.png)
+![](media/image6.png)
 
 \*/2 \* \* \* \* pg_dump -U postgres -Fc -f
 /home/mora/backups/dbsamplinav\_\$(date +\\%Y\\%m\\%d\\%H\\%M).dump
@@ -151,13 +151,13 @@ dbsamplinav
 
 Бэкапы старше 15 минут удаляются
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image7.png)
+![](media/image7.png)
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image8.png)
+![](media/image8.png)
 
 6.  **Мониторинг состояния системы**
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image9.png)
+![](media/image9.png)
 
 Команда top в реальном времени отображает информацию о запущенных
 процессах и использовании системных ресурсов.
@@ -216,7 +216,7 @@ pg_stat_activity - мониторинг активных процессов в P
 
 Чтобы увидеть активные процессы и запросы
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image10.png)
+![](media/image10.png)
 
 SELECT pid, usename, application_name, state, query, query_start FROM
 pg_stat_activity WHERE state = \'active\';
@@ -229,14 +229,14 @@ application_name - название приложения, которое ини�
 
 state - состояние процесса
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image11.png)
+![](media/image11.png)
 
 Смотреть все процессы:
 
 SELECT pid, usename, application_name, state, query, query_start FROM
 pg_stat_activity;
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image12.png)
+![](media/image12.png)
 
 Для поиска запросов, которые выполняются слишком долго, можно
 использовать следующую команду:
@@ -245,7 +245,7 @@ SELECT pid, usename, application_name, state, query, query_start FROM
 pg_stat_activity WHERE state = \'active\' AND now() - query_start \>
 interval \'5 minutes\';
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image13.png)
+![](media/image13.png)
 
 SELECT datname, numbackends, xact_commit, xact_rollback, blks_read,
 blks_hit
@@ -277,7 +277,7 @@ SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE state =
 
 8.  **Логирование и анализ логов**
 
-![](vertopal_9c470e09f21c4ca0a542383d9da8d7b7/media/image14.png)
+![](media/image14.png)
 
 Первой командой указаны логи PostgreSQL
 
