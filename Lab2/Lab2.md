@@ -6,7 +6,7 @@
 
 ## **1.  Утилиты резервного копирования**
 
-1\. pg_dump --- резервное копирование одной базы данных в виде
+1\. pg_dump - резервное копирование одной базы данных в виде
 SQL-скрипта
 
 pg_dump предназначен для формирования текстового дампа конкретной базы
@@ -24,11 +24,11 @@ pg_dump предназначен для формирования текстов�
 -   Когда нужен редактируемый SQL-дамп, который можно при необходимости
     корректировать до восстановления.
 
-pg_dump -U postgres -Fc -f backup.dump dbsamplinav
+`pg_dump -U postgres -Fc -f backup.dump dbsamplinav`
 
 База **dbsamplinav** экспортируется в сжатый файл **backup.dump**.
 
-2\. pg_basebackup --- создание полной копии сервера
+2\. pg_basebackup - создание полной копии сервера
 
 pg_basebackup выполняет полное копирование всего сервера PostgreSQL,
 включая все базы данных, конфигурационные файлы, журналы транзакций и
@@ -44,7 +44,7 @@ pg_basebackup выполняет полное копирование всего 
 -   В ситуациях, требующих быстрого восстановления сервера до состояния,
     зафиксированного в момент копирования
 
-pg_basebackup -U postgres -D /path/to/backup_dir -Ft
+`pg_basebackup -U postgres -D /path/to/backup_dir -Ft`
 
 Объект резервного копирования:
 
@@ -68,16 +68,16 @@ pg_basebackup -U postgres -D /path/to/backup_dir -Ft
 
 ![](media/image1.png)
 
-pg_dump -U postgres -Fc -f dbsamplinav_backup.dump dbsamplinav
+`pg_dump -U postgres -Fc -f dbsamplinav_backup.dump dbsamplinav`
 
--   -U postgres --- указывает пользователя PostgreSQL.
+-   -U postgres - указывает пользователя PostgreSQL.
 
--   -Fc --- выбирает формат custom, который автоматически сжимает данные
+-   -Fc - выбирает формат custom, который автоматически сжимает данные
     и позволяет гибко восстанавливать части дампа при необходимости.
 
--   -f dbsamplinav_backup.dump --- задаёт имя (и путь) выходного файла.
+-   -f dbsamplinav_backup.dump - задаёт имя (и путь) выходного файла.
 
--   dbsamplinav --- это название базы данных, которую нужно сохранить.
+-   dbsamplinav - это название базы данных, которую нужно сохранить.
 
 Форматы резервных копий:
 
@@ -93,21 +93,21 @@ pg_dump -U postgres -Fc -f dbsamplinav_backup.dump dbsamplinav
 
 -   -t: указывает конкретную таблицу или несколько таблиц
 
-pg_dump -U postgres -Fc -f backup.dump -t public.users dbsamplinav
+`pg_dump -U postgres -Fc -f backup.dump -t public.users dbsamplinav`
 
 В данном случае экспортируется только таблица **public.users** из базы
 **dbsamplinav**.
 
 -   -n: определяет схему, которая должна быть включена в резервную
 
-pg_dump -U postgres -Fc -f backup.dump -n public dbsamplinav
+`pg_dump -U postgres -Fc -f backup.dump -n public dbsamplinav`
 
 Здесь сохраняется всё содержимое схемы **public**.
 
 -   **-T**: исключает определённую таблицу из бэкапа.
 
-pg_dump -U postgres -Fc -f backup.dump -T public.internal_logs
-dbsamplinav
+`pg_dump -U postgres -Fc -f backup.dump -T public.internal_logs
+dbsamplinav`
 
 Таблица **public.internal_logs** не попадёт в резервную копию.
 
@@ -140,14 +140,14 @@ public.test_table dbsamplinav
 
 ![](media/image6.png)
 
-\*/2 \* \* \* \* pg_dump -U postgres -Fc -f
+`\*/2 \* \* \* \* pg_dump -U postgres -Fc -f
 /home/mora/backups/dbsamplinav\_\$(date +\\%Y\\%m\\%d\\%H\\%M).dump
-dbsamplinav
+dbsamplinav`
 
 Каждые 2 минуты будет создаваться бэкап
 
-\*/15 \* \* \* \* find /home/mora/backups/ -name \"\*.dump\" -type f
--mmin +15 -exec rm {} \\;
+`\*/15 \* \* \* \* find /home/mora/backups/ -name \"\*.dump\" -type f
+-mmin +15 -exec rm {} \\`
 
 Бэкапы старше 15 минут удаляются
 
@@ -218,8 +218,8 @@ pg_stat_activity - мониторинг активных процессов в P
 
 ![](media/image10.png)
 
-SELECT pid, usename, application_name, state, query, query_start FROM
-pg_stat_activity WHERE state = \'active\';
+`SELECT pid, usename, application_name, state, query, query_start FROM
+pg_stat_activity WHERE state = \'active\';`
 
 pid - id процесса.
 
@@ -233,24 +233,22 @@ state - состояние процесса
 
 Смотреть все процессы:
 
-SELECT pid, usename, application_name, state, query, query_start FROM
-pg_stat_activity;
+`SELECT pid, usename, application_name, state, query, query_start FROM
+pg_stat_activity;`
 
 ![](media/image12.png)
 
 Для поиска запросов, которые выполняются слишком долго, можно
 использовать следующую команду:
 
-SELECT pid, usename, application_name, state, query, query_start FROM
+`SELECT pid, usename, application_name, state, query, query_start FROM
 pg_stat_activity WHERE state = \'active\' AND now() - query_start \>
-interval \'5 minutes\';
+interval \'5 minutes\';`
 
 ![](media/image13.png)
 
-SELECT datname, numbackends, xact_commit, xact_rollback, blks_read,
-blks_hit
-
-FROM pg_stat_database;
+`SELECT datname, numbackends, xact_commit, xact_rollback, blks_read,
+blks_hit FROM pg_stat_database;`
 
 pg_stat_database - позволяет получать статистику работы бд в PostgreSQL
 
@@ -270,8 +268,8 @@ buffers), без обращения к диску.
 
 Принудительное завершение запроса:
 
-SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE state =
-\'active\' AND now() - query_start \> interval \'5 minutes\';
+`SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE state =
+\'active\' AND now() - query_start \> interval \'5 minutes\';`
 
 Эта команда завершит запросы, которые выполняются дольше 5 минут.
 
