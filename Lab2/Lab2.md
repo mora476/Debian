@@ -137,8 +137,9 @@ public.test_table dbsamplinav``
 И следом проверяем работоспособность
 
 ## **5.  Автоматизация бэкапов с помощью cron**
-
+Через `Crontab -e` открываем конфигурационный файл
 ![](media/image6.png)
+
 
 `\*/2 \* \* \* \* pg_dump -U postgres -Fc -f
 /home/mora/backups/dbsamplinav\_\$(date +\\%Y\\%m\\%d\\%H\\%M).dump
