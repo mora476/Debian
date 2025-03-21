@@ -33,13 +33,13 @@
 
  >![](media/image4.png)
 
- SHOW shared_buffers;
+ `SHOW shared_buffers;`
 
- SHOW work_mem;
+ `SHOW work_mem;`
 
- SHOW maintenance_work_mem;
+ `SHOW maintenance_work_mem;`
 
- SHOW effective_cache_size;
+ `SHOW effective_cache_size;`
 
 ## **2.  Создание и анализ индексов**
 
@@ -49,13 +49,13 @@
 
  >![](media/image6.png)
 
- CREATE TABLE index (id SERIAL PRIMARY KEY, ind INTEGER);
+ `CREATE TABLE index (id SERIAL PRIMARY KEY, ind INTEGER);`
 
- INSERT INTO index(ind) SELECT generate_series(1, 999999);
+ `INSERT INTO index(ind) SELECT generate_series(1, 999999);`
 
- EXPLAIN SELECT \* FROM index WHERE ind = 888888;
+ `EXPLAIN SELECT \* FROM index WHERE ind = 888888;`
 
- EXPLAIN ANALYZE SELECT \* FROM index WHERE ind = 888888;
+ `EXPLAIN ANALYZE SELECT \* FROM index WHERE ind = 888888;`
 
  >![](media/image7.png)
 
@@ -80,31 +80,31 @@
 
  >![](media/image10.png)
 
- CREATE OR REPLACE FUNCTION proverka_znach(chislo INTEGER)
+ `CREATE OR REPLACE FUNCTION proverka_znach(chislo INTEGER)`
 
- RETURNS TEXT AS \$\$
+ `RETURNS TEXT AS \$\$`
 
- BEGIN
+ `BEGIN`
 
- \-- Проверяем, является ли число отрицательным
+ `\-- Проверяем, является ли число отрицательным`
 
- IF chislo \< 0 THEN
+ `IF chislo \< 0 THEN`
 
- RETURN \'Ошибка: отрицательное значение!\';
+ `RETURN \'Ошибка: отрицательное значение!\';`
 
- ELSE
+ `ELSE`
 
- \-- Если число положительное, вставляем его в таблицу index
+ `\-- Если число положительное, вставляем его в таблицу index`
 
- INSERT INTO index(ind) VALUES (chislo);
+ `INSERT INTO index(ind) VALUES (chislo);`
 
- RETURN \'Запись добавлена: \' \|\| chislo;
+ `RETURN \'Запись добавлена: \' \|\| chislo;`
 
- END IF;
+ `END IF;`
 
- END;
+ `END;`
 
- \$\$ LANGUAGE plpgsql;
+ `\$\$ LANGUAGE plpgsql;`
 
  >![](media/image11.png)
 
@@ -112,25 +112,25 @@
 
 ## **4.  Триггеры**
 
- CREATE OR REPLACE FUNCTION check_trig()
+ `CREATE OR REPLACE FUNCTION check_trig()`
+ 
+ `RETURNS TRIGGER AS \$\$`
 
- RETURNS TRIGGER AS \$\$
+ `BEGIN`
 
- BEGIN
+ `\-- Если число отрицательное, вызываем ошибку`
 
- \-- Если число отрицательное, вызываем ошибку
+ `IF NEW.ind\< 0 THEN`
 
- IF NEW.ind\< 0 THEN
+ `RAISE EXCEPTION \'Ошибка: ind не может быть отрицательным!\';`
+ 
+ `END IF;`
 
- RAISE EXCEPTION \'Ошибка: ind не может быть отрицательным!\';
+ `RETURN NEW;`
 
- END IF;
+ `END;`
 
- RETURN NEW;
-
- END;
-
- \$\$ LANGUAGE plpgsql;
+ `\$\$ LANGUAGE plpgsql;`
 
  >![](media/image13.png)
 
