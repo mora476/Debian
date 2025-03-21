@@ -1,3 +1,5 @@
+>Отчет по лабораторной работе №3 Расширенные возможности и оптимизация PostgreSQL на Debian
+>Самплиной В.Р. ИС-21
 ## **1.  Оптимизация конфигурации PostgreSQL**
 
  Заходим в postgresql.conf и настраиваем выделение памяти под разные
@@ -30,13 +32,13 @@
 
  ![](media/image4.png)
 
- SHOW shared_buffers;
+ `SHOW shared_buffers;
 
  SHOW work_mem;
 
  SHOW maintenance_work_mem;
 
- SHOW effective_cache_size;
+ SHOW effective_cache_size;`
 
 ## **2.  Создание и анализ индексов**
 
