@@ -1,12 +1,13 @@
 >Отчет по лабораторной работе №3 Расширенные возможности и оптимизация PostgreSQL на Debian
+>
 >Самплиной В.Р. ИС-21
 ## **1.  Оптимизация конфигурации PostgreSQL**
 
  Заходим в postgresql.conf и настраиваем выделение памяти под разные
  процессы.
 
- ![](media/image1.png)
- ![](media/image2.png)
+ >![](media/image1.png)
+ >![](media/image2.png)
 
  **shared_buffers** - размер памяти, выделенной под буферный кэш
  PostgreSQL. Этот кэш хранит данные в оперативной памяти, что помогает
@@ -28,25 +29,25 @@
  системой перед обращением к диску. Обычно его значение составляет от
  50 до 75% от общего объёма RAM.
 
- ![](media/image3.png)
+ >![](media/image3.png)
 
- ![](media/image4.png)
+ >![](media/image4.png)
 
- `SHOW shared_buffers;
+ SHOW shared_buffers;
 
  SHOW work_mem;
 
  SHOW maintenance_work_mem;
 
- SHOW effective_cache_size;`
+ SHOW effective_cache_size;
 
 ## **2.  Создание и анализ индексов**
 
  Создали таблицу, заполнили данными.
 
- ![](media/image5.png)
+ >![](media/image5.png)
 
- ![](media/image6.png)
+ >![](media/image6.png)
 
  CREATE TABLE index (id SERIAL PRIMARY KEY, ind INTEGER);
 
@@ -56,11 +57,11 @@
 
  EXPLAIN ANALYZE SELECT \* FROM index WHERE ind = 888888;
 
- ![](media/image7.png)
+ >![](media/image7.png)
 
- ![](media/image8.png)
+ >![](media/image8.png)
 
- ![](media/image9.png)
+ >![](media/image9.png)
 
  EXPLAIN ANALYZE SELECT \* FROM index WHERE ind = 888888;\
  используется для измерения фактического времени выполнения запроса. В
@@ -77,7 +78,7 @@
 
 ## **3.  Хранимые функции**
 
- ![](media/image10.png)
+ >![](media/image10.png)
 
  CREATE OR REPLACE FUNCTION proverka_znach(chislo INTEGER)
 
@@ -105,9 +106,9 @@
 
  \$\$ LANGUAGE plpgsql;
 
- ![](media/image11.png)
+ >![](media/image11.png)
 
- ![](media/image12.png)
+ >![](media/image12.png)
 
 ## **4.  Триггеры**
 
@@ -131,21 +132,21 @@
 
  \$\$ LANGUAGE plpgsql;
 
- ![](media/image13.png)
+ >![](media/image13.png)
 
- ![](media/image14.png)
+ >![](media/image14.png)
 
  ## **5. Автоматическая очистка и статистика (VACUUM, ANALYZE)**
 
- ![](media/image15.png)
+ >![](media/image15.png)
 
- ![](media/image16.png)
+ >![](media/image16.png)
 
- ![](media/image17.png)
+ >![](media/image17.png)
 
- ![](media/image18.png)
+ >![](media/image18.png)
 
- ![](media/image19.png)
+ >![](media/image19.png)
 
  Автовакуум в PostgreSQL с заданным интервалом (по умолчанию каждые 1
  минуту) проверяет таблицы на наличие «мёртвых» строк. Если объём
@@ -166,9 +167,9 @@
 -   **VACUUM ANALYZE index;** - совмещает очистку и обновление
     статистики, что дополнительно повышает производительность запросов.
 
- ![](media/image20.png)
+ >![](media/image20.png)
 
- ![](media/image21.png)
+ >![](media/image21.png)
 
  relname - имя таблицы.
 
@@ -182,7 +183,7 @@
 
  last_vacuum - время последнего ручного запуска VACUUM.
 
- ![](media/image22.png)
+ >![](media/image22.png)
 
  relname - имя таблицы.
 
